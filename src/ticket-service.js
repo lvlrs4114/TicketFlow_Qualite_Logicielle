@@ -17,6 +17,7 @@ export async function createTicket(
   api = ticketApi,
 ) {
   const title = normalizeTicketTitle(input?.title);
+  if (!title) throw new Error("Le titre du ticket est obligatoire.");
   const severity = Number(input?.severity ?? 3);
   const ticket = {
     id: crypto.randomUUID(),
