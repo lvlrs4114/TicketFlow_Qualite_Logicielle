@@ -12,8 +12,8 @@ export function normalizeTicketTitle(title) {
  */
 export function shippingCost(order) {
   const total = Number(order?.total ?? 0);
-  if (order?.premium) return 9.9;
-  if (total > 100) return 0;
+  if (order?.premium) return 0;
+  if (total >= 100) return 0;
   return 9.9;
 }
 
