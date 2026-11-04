@@ -1,33 +1,27 @@
-# TP2 — Couverture et mutation
+# TP2 — Expérience sur la couverture
 
-## Partitions supplémentaires choisies avant les tests
+`shippingCost` est maintenant isolée dans `src/shipping.js`, sans dépendance
+avec le DOM. Toutes les mesures ci-dessous portent uniquement sur ce module,
+avec la commande fournie dans la fiche.
 
-Pour un total de 0 € sans abonnement premium, les frais sont de 9,90 €,
-conformément à la règle des montants inférieurs à 100 €.
-Pour un argument absent, nous ajoutons l'hypothèse suivante : il représente une
-commande non premium de total 0 €, donc des frais de 9,90 €. Cette politique
-est un choix explicite, pas une exigence de la fiche.
+| Expérience                         | Résultat            | Lignes | Branches |
+| ---------------------------------- | ------------------- | ------ | -------- |
+| Trois tests faibles sur le starter | 3 réussis           | 100 %  | 83,33 %  |
+| Tests pertinents sur le starter    | 2 échecs, 4 réussis | 100 %  | 100 %    |
+| Même suite après correction        | 6 réussis           | 100 %  | 100 %    |
+| Mutation >= 100 vers > 100         | 1 échec, 5 réussis  | 100 %  | 100 %    |
 
-L'absence de mutation du tri est déjà vérifiée dans `tests/title.test.js` (TP1).
+La suite faible couvre 99, 101 et le type du résultat premium à 20.
+La suite complète vérifie les montants de 99, 100, 101 et premium à 20,
+ainsi que deux partitions supplémentaires : 0 et argument absent.
+Pour l'argument absent, l'hypothèse choisie avant le test est une commande non
+premium de total nul (9,90 € de frais). Ce choix complète la spécification.
 
-## Expériences réalisées
+Le test à 100 tue la mutation du seuil. Les modifications temporaires ont été
+restaurées après chaque expérience ; le module conserve sa version corrigée.
 
-- Avant correction : 30 tests réussis, 2 échecs (100 € et premium à 20 €).
-- Suite provisoire limitée à 99 € et 101 € : les deux tests passent sur le code
-  erroné. Ils exécutent les deux issues du seuil existant, sans vérifier sa
-  frontière ni la règle premium. La couverture du module reste à 19,04 % des
-  lignes et 16 % des branches : cette petite suite ne couvre pas tout le module.
-- Tests pertinents restaurés, puis correction : 32 tests réussis ; couverture
-  de `ticket-utils.js` : 100 % des lignes, 84 % des branches. Les branches non
-  exécutées concernent notamment les valeurs de repli des autres fonctions.
-- Mutation manuelle `>= 100` vers `> 100` : seul le test « facture 100 € de
-  commande non premium à 0 € de livraison » échoue ; les 5 autres tests de
-  livraison passent. La mutation a ensuite été annulée.
-
-## Ce que mesure la couverture
-
-La couverture indique les lignes et les branches exécutées par les tests.
-Elle permet de repérer des chemins encore inexplorés.
-Même une couverture élevée ne vérifie pas la justesse des valeurs attendues.
-Les frontières et les partitions doivent venir de la spécification.
-Le test à 100 € tue la mutation du seuil : il protège la règle métier précise.
+Le rapport mesure l'exécution, sans certifier la qualité des assertions.
+Une meilleure assertion peut révéler un défaut sans couvrir davantage de lignes.
+Une frontière utile vaut mieux que multiplier des montants similaires.
+Le même score de couverture peut accompagner des tests verts ou rouges.
+La mutation prouve la détection d'un défaut précis, pas de tous les défauts.

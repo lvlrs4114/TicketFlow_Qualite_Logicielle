@@ -1,17 +1,46 @@
-# Exercice final — Nouvelle exigence sous contrainte (30 min)
+# Exercice final — Compter les tickets en cours (20 min)
 
-**Changement annoncé :** un ticket de sévérité 8, 9 ou 10 doit être `HIGH` et déclencher **une** notification support. Le ticket doit rester sauvegardé si la notification échoue. La politique retenue pour cet exercice est de **propager l'erreur** tout en gardant le ticket local.
+## Objectif
 
-## Mission essentielle — 20 min
+La règle métier évolue : un ticket `IN_PROGRESS` doit compter parmi les tickets ouverts. Vous allez vérifier cette règle dans une fonction simple, puis adapter son calcul.
 
-Sans indication de niveau de test, choisir et écrire le minimum utile : seuil 7/8, notification unique à 8, absence de notification à 7, ticket persistant lorsque `notifySupport` rejette. Faire passer la suite. Noter quelles dépendances sont remplacées et pourquoi.
+## Mission essentielle
 
-## Investigation — 5 min
+1. Ouvrez `tests/FINAL-starter.test.js`, activez le test et complétez l’attente indiquée.
+2. Lancez le test ciblé et observez l’échec.
+3. Adaptez `calculateStats()` pour compter les tickets en cours comme ouverts.
+4. Relancez le test ciblé, la suite Jest et le build.
 
-Le service sauvegarde déjà avant la notification. Que se passe-t-il si `postTicket` échoue ? Quelle propriété votre test garantit-il vraiment ? Distinguer stockage local, réception serveur et livraison de notification.
+## Point de départ
 
-## Défi — 5 min
+Ouvrez `tests/FINAL-starter.test.js`. La fonction à corriger est dans `src/ticket-utils.js`.
 
-Proposer un statut « notification à relancer » sans l'implémenter. Quel test d'intégration supplémentaire devient prioritaire ? Présenter en 60 secondes le choix des niveaux et les risques non couverts.
+```bash
+npm test -- --runInBand --runTestsByPath tests/FINAL-starter.test.js
+```
 
-**Livrable :** tests justifiés, suite verte sur les règles demandées, et une explication de ce qu'elle ne prouve pas.
+Au départ, le test est ignoré et le code ne compte que les statuts `OPEN` comme ouverts.
+
+## Critères de réussite
+
+- Le test vérifie les statuts `OPEN`, `IN_PROGRESS` et `CLOSED`.
+- Le test ciblé et la suite Jest passent après la correction.
+- `npm run build` passe.
+
+## Indices progressifs
+
+<details><summary>Indice 1</summary>
+Le total et le nombre de tickets fermés ne changent pas avec cette règle.
+</details>
+
+<details><summary>Indice 2</summary>
+Dans `calculateStats`, le nombre `open` vient d’un filtre sur le statut.
+</details>
+
+<details><summary>Indice 3</summary>
+Un ticket doit contribuer à `open` si son statut est `OPEN` ou `IN_PROGRESS`.
+</details>
+
+## Bonus facultatif
+
+Quels autres composants, comme l’interface ou une fonction qui récupère les tickets ouverts, pourraient devoir appliquer cette nouvelle règle ?

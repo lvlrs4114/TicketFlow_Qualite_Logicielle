@@ -1,32 +1,21 @@
-import { ticketRepository } from "./ticket-repository.js";
-
-const delay = (ms) => new Promise((r) => setTimeout(r, ms));
-
-/**
- * HTTP-shaped transport used by the browser build. It keeps the project
- * runnable without another process while preserving a realistic response
- * shape for the service and its tests.
- */
 export const httpClient = {
   async get(path) {
-    await delay(20);
-    if (path !== "/api/tickets")
-      return { status: 404, body: { message: "Ressource introuvable" } };
-    return { status: 200, body: { tickets: await ticketRepository.findAll() } };
+    return toResponse(await fetch(path));
   },
   async post(path, payload) {
-    await delay(25);
-    if (path !== "/api/tickets")
-      return { status: 404, body: { message: "Ressource introuvable" } };
-    return { status: 201, body: { ticket: payload } };
-  },
-  async patch(path, payload) {
-    await delay(25);
-    if (!path.startsWith("/api/tickets/"))
-      return { status: 404, body: { message: "Ressource introuvable" } };
-    return { status: 200, body: { ticket: payload } };
+    return toResponse(await fetch(path, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    }));
   },
 };
+
+async function toResponse(response) {
+  let body = {};
+  try { body = await response.json(); } catch {}
+  return { status: response.status, body };
+}
 
 function assertOk(response) {
   if (response.status >= 400)
@@ -43,8 +32,7 @@ export const ticketApi = {
     return assertOk(await httpClient.post("/api/tickets", payload));
   },
   async notifySupport(ticket) {
-    await delay(30);
     if (!ticket?.id) throw new Error("Ticket invalide");
-    return { delivered: true };
+    return assertOk(await httpClient.post("/api/support-notifications", { ticketId: ticket.id }));
   },
 };

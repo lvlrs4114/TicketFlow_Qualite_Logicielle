@@ -1,17 +1,55 @@
-# TP5 — Un vrai parcours dans le navigateur (60 min)
+# TP5 — Parcours utilisateur dans le navigateur (60–70 min)
 
-**Précondition :** les corrections du seuil 8 et du champ `title` ont été apportées. Garder `npm run dev` ouvert dans un terminal.
+## Objectif
 
-## Mission essentielle — 25 min
+Un ticket peut être créé sans que l’interface affiche correctement sa priorité ou son état. Vous allez vérifier le parcours visible dans un vrai navigateur.
 
-Créer `cypress/e2e/05-parcours.cy.js`. Réinitialiser les tickets au début du scénario ; créer « Production indisponible » en sévérité **8** ; vérifier « Ticket créé. » et le badge `HIGH` dans **sa carte** ; ouvrir Détails, constater `OPEN`, clore, constater `CLOSED`, revenir à la liste et retrouver `CLOSED` sur la même carte. Recharger la page et vérifier la persistance.
+## Mission essentielle
 
-## Investigation — 20 min
+1. **Créer** : dans le premier test, saisir « Production indisponible », choisir la sévérité `8`, puis créer le ticket.
+2. **Vérifier la priorité** : trouvez la carte de ce ticket et vérifiez que son badge indique `HIGH`.
+3. **Préparer le deuxième test** : créez-y son propre ticket de sévérité `8`; chaque test repart de données réinitialisées.
+4. **Ouvrir et fermer** : ouvrez le détail, vérifiez `OPEN`, puis utilisez le bouton de fermeture.
+5. **Vérifier le résultat** : vérifiez `CLOSED` et revenez à la liste. Complétez les TODO puis retirez les deux `it.skip`.
 
-Ajouter un scénario indépendant pour un titre constitué d'espaces (erreur visible, aucun ticket conservé) et un scénario de recherche insensible à la casse. Expliquer pourquoi `cy.contains('HIGH')` dans toute la page serait une assertion moins précise que la recherche dans la carte nommée. Éviter tout `cy.wait(2000)`.
+## Point de départ
 
-## Défi — 15 min
+Ouvrez `cypress/e2e/05-parcours.starter.cy.js`. Lancez le serveur dans un terminal, puis le smoke dans un autre :
 
-Tester le tri « Titre A–Z » avec trois tickets créés dans un ordre différent ; retourner à l'ordre de création. Décider si ce E2E apporte assez de valeur compte tenu du risque faible et du test unitaire du tri. Écrire la raison de votre choix, même si vous supprimez ce scénario.
+```bash
+npm run dev
+npm run e2e -- --spec cypress/e2e/smoke.cy.js
+```
 
-**Livrable :** un parcours critique complet, autonome et relançable. Il valide navigateur + code local, pas l'acceptation d'une requête par un serveur distant.
+Dans Cypress, `cy.visit("/")` ouvre l’application, `cy.get(...)` trouve un élément, `cy.contains(...)` cherche un texte, `.find(...)` cherche à l’intérieur d’un élément déjà trouvé, et `.should(...)` vérifie une condition avec attente automatique.
+
+Exemple de sélection d’une carte puis de son badge (à adapter, ce n’est pas le scénario complet) :
+
+```js
+cy.contains('[data-cy="ticket-card"]', "Mon titre")
+  .find('[data-cy="priority-badge"]');
+```
+
+## Critères de réussite
+
+- Le smoke et les deux tests complétés passent.
+- `HIGH` est vérifié dans la carte du ticket créé.
+- Le deuxième test fonctionne seul et vérifie `OPEN`, `CLOSED`, puis le retour à la liste.
+
+## Indices progressifs
+
+<details><summary>Indice 1</summary>
+Les champs ont les sélecteurs `[data-cy="ticket-title"]` et `[data-cy="ticket-severity"]`; le bouton de création est `[data-cy="create-ticket"]`.
+</details>
+
+<details><summary>Indice 2</summary>
+Après création, ciblez la carte avec `cy.contains('[data-cy="ticket-card"]', titre)`, puis cherchez le badge avec `.find(...)`.
+</details>
+
+<details><summary>Indice 3</summary>
+Le détail s’ouvre avec `[data-cy="open-ticket"]`; son statut est `[data-cy="detail-status"]`. Fermez avec `[data-cy="detail-close-ticket"]`, puis revenez avec `[data-cy="back-to-list"]`.
+</details>
+
+## Bonus
+
+Essayez la recherche, le tri ou la persistance après rechargement, en gardant chaque test autonome.

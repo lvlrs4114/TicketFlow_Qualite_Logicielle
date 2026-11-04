@@ -45,4 +45,4 @@ Les sélecteurs d’action sont exposés avec `data-cy`. Les quatre scénarios d
 
 ## Parcours pédagogique
 
-Les sujets étudiants détaillés sont dans [`exercises/README.md`](exercises/README.md) : TP0 exploration, TP1 unitaires, TP2 coverage et limites, TP3 API et mocks, TP4 intégration, TP5 Cypress, TP6 flakiness, TP7 stratégie, TP8 CI, puis l'exercice final. Chaque fiche comprend mission, investigation, défi et livrable. Le tri alphabétique des tickets est une fonctionnalité secondaire à tester et à arbitrer.
+Les sujets étudiants détaillés sont dans [`exercises/README.md`](exercises/README.md) : TP0 exploration, TP1 unitaires, TP2 coverage et limites, TP3 API et mocks, TP4 intégration, TP5 Cypress, TP6 flakiness, TP7 tests API Cypress/Jest, TP8 CI, puis l'exercice final. Chaque fiche comprend mission, investigation, défi et livrable. Le tri alphabétique des tickets est une fonctionnalité secondaire à tester.

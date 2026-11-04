@@ -6,11 +6,6 @@ export async function getTickets(api = ticketApi) {
   return api.getTickets();
 }
 
-export async function getOpenTickets(api = ticketApi) {
-  const tickets = await getTickets(api);
-  return tickets.filter((ticket) => ticket.status === "OPEN");
-}
-
 export async function createTicket(
   input,
   repository = ticketRepository,

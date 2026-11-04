@@ -1,4 +1,4 @@
-import { getOpenTickets } from "../src/ticket-service.js";
+import { getOpenTickets } from "../src/open-tickets.js";
 
 describe("getOpenTickets", () => {
   test("retourne exactement les ouverts dans leur ordre, avec un seul appel API", async () => {

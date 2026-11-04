@@ -63,10 +63,9 @@ describe("createTicket — validation du titre", () => {
       }),
     );
     expect(api.postTicket).toHaveBeenCalledTimes(1);
-    expect(api.postTicket).toHaveBeenCalledWith({
-      name: "VPN inaccessible",
-      priority: "LOW",
-    });
+    expect(api.postTicket).toHaveBeenCalledWith(
+      expect.objectContaining({ priority: "LOW" }),
+    );
     expect(api.notifySupport).not.toHaveBeenCalled();
   });
 });
