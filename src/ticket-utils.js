@@ -4,19 +4,6 @@ export function normalizeTicketTitle(title) {
     .replace(/\s+/g, " ");
 }
 
-/**
- * Cost of shipping a replacement kit for a support ticket.
- *
- * This small business rule is deliberately kept pure: it gives the class a
- * second example on which to practise partitions and boundary values.
- */
-export function shippingCost(order) {
-  const total = Number(order?.total ?? 0);
-  if (order?.premium) return 0;
-  if (total >= 100) return 0;
-  return 9.9;
-}
-
 export function calculatePriority(ticket) {
   const severity = Number(ticket?.severity);
   if (severity >= 8) return "HIGH";

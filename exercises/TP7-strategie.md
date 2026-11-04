@@ -1,17 +1,42 @@
-# TP7 — Budget de 15 tests (35 min)
+# TP7 — Répartir un budget fictif de tests (25–30 min)
 
-**Situation.** Une équipe reprend TicketFlow. Elle dispose d'un budget de **15 tests supplémentaires**. Tout automatiser n'est pas un objectif.
+**Contexte**
 
-## Mission essentielle — 15 min
+Votre équipe dispose d’un budget pédagogique fictif de **8 tests** pour six fonctionnalités. Le budget sert à discuter des risques; il ne correspond pas à une limite réelle du projet. Il s’agit de choisir les tests, pas de les programmer.
 
-Par groupe, classer ces fonctionnalités par probabilité × impact : création, titre vide, seuil de priorité, notification, contrat `title`, fermeture/persistance, recherche, statistiques avec statut nouveau, tri A–Z, couleur du badge. Écrire une stratégie d'une page : cas retenu, niveau (unitaire/intégration/E2E), oracle, coût approximatif. Le total doit faire exactement 15.
+**Votre mission**
 
-## Investigation — 10 min
+1. À partir de la matrice, répartissez exactement 8 tests entre création, priorité HIGH, fermeture/persistance, recherche, tri A–Z et couleur du badge.
+2. Pour chaque fonctionnalité, choisissez une quantité et un ou plusieurs niveaux : unitaire, intégration ou E2E. Vous pouvez lui attribuer zéro test.
+3. Laissez au moins une fonctionnalité sans test.
+4. Justifiez deux décisions, dont le renoncement à cette fonctionnalité.
 
-Deux groupes échangent leurs plans. Chacun conteste deux choix de l'autre : doublon entre couches ? zone critique non couverte ? test trop couplé à l'implémentation ? Assumer explicitement au moins une chose non automatisée. Défendre le choix « tri A–Z : zéro, un ou deux tests » en fonction de son faible impact et du coût.
+Les niveaux d’impact et de probabilité sont des hypothèses fournies (1 faible, 3 élevé).
 
-## Défi — 10 min
+| Fonctionnalité | Impact | Probabilité | Niveaux choisis | Nombre de tests |
+|---|---:|---:|---|---:|
+| Création ticket | 3 | 3 | TODO | TODO |
+| Priorité HIGH | 3 | 2 | TODO | TODO |
+| Fermeture et persistance | 3 | 2 | TODO | TODO |
+| Recherche | 2 | 3 | TODO | TODO |
+| Tri A–Z | 1 | 2 | TODO | TODO |
+| Couleur du badge | 1 | 2 | TODO | TODO |
+| **Total** |  |  |  | **8** |
 
-Un changement survient : 40 % des utilisateurs trient les tickets avant de les traiter. Refaire seulement trois arbitrages, sans dépasser 15 tests. Distinguer fréquence d'utilisation et gravité en cas d'erreur.
+**Fichiers utiles**
 
-**Livrable :** matrice de 15 tests, deux choix controversés argumentés, un compromis assumé.
+`src/ticket-service.js`, `src/ticket-utils.js`, `src/app.js`, `index.html` et les exemples dans `tests/`.
+
+**Commande**
+
+```bash
+npm test -- --runInBand
+```
+
+**Critère de réussite**
+
+La proposition totalise 8 tests, répartit niveaux et quantités sur les six lignes, et justifie deux choix dont une fonctionnalité entièrement laissée sans test.
+
+**Bonus (facultatif)**
+
+Si le tri devient très fréquent, réallouez des tests sans dépasser le budget et expliquez le compromis.

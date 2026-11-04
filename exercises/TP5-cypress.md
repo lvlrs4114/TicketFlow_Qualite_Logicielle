@@ -1,17 +1,34 @@
-# TP5 — Un vrai parcours dans le navigateur (60 min)
+# TP5 — Parcours utilisateur dans le navigateur (60–70 min)
 
-**Précondition :** les corrections du seuil 8 et du champ `title` ont été apportées. Garder `npm run dev` ouvert dans un terminal.
+**Contexte**
 
-## Mission essentielle — 25 min
+Vous allez vérifier un parcours critique dans le navigateur, avec des données réinitialisées pour chaque test. Le smoke existant montre déjà la création d’un ticket.
 
-Créer `cypress/e2e/05-parcours.cy.js`. Réinitialiser les tickets au début du scénario ; créer « Production indisponible » en sévérité **8** ; vérifier « Ticket créé. » et le badge `HIGH` dans **sa carte** ; ouvrir Détails, constater `OPEN`, clore, constater `CLOSED`, revenir à la liste et retrouver `CLOSED` sur la même carte. Recharger la page et vérifier la persistance.
+**Votre mission**
 
-## Investigation — 20 min
+1. Lancez le serveur dans un terminal et exécutez `smoke.cy.js` depuis l’autre.
+2. Dans le starter, créez « Production indisponible », sévérité `8`, puis vérifiez `HIGH` dans sa carte.
+3. Dans un test indépendant, ouvrez son détail, vérifiez `OPEN`, fermez-le, vérifiez `CLOSED` et revenez à la liste.
+4. Complétez les deux tests, puis retirez leur `it.skip` pour les exécuter.
 
-Ajouter un scénario indépendant pour un titre constitué d'espaces (erreur visible, aucun ticket conservé) et un scénario de recherche insensible à la casse. Expliquer pourquoi `cy.contains('HIGH')` dans toute la page serait une assertion moins précise que la recherche dans la carte nommée. Éviter tout `cy.wait(2000)`.
+**Fichiers utiles**
 
-## Défi — 15 min
+- `cypress/e2e/smoke.cy.js`
+- `cypress/e2e/05-parcours.starter.cy.js`
+- Sélecteurs dans `index.html` et `src/app.js`
 
-Tester le tri « Titre A–Z » avec trois tickets créés dans un ordre différent ; retourner à l'ordre de création. Décider si ce E2E apporte assez de valeur compte tenu du risque faible et du test unitaire du tri. Écrire la raison de votre choix, même si vous supprimez ce scénario.
+Sélecteurs utiles : `[data-cy="ticket-title"]`, `[data-cy="ticket-severity"]`, `[data-cy="create-ticket"]`, `[data-cy="ticket-card"]`, `[data-cy="priority-badge"]`, `[data-cy="open-ticket"]`, `[data-cy="detail-close-ticket"]`, `[data-cy="detail-status"]`, `[data-cy="back-to-list"]`.
 
-**Livrable :** un parcours critique complet, autonome et relançable. Il valide navigateur + code local, pas l'acceptation d'une requête par un serveur distant.
+**Commande**
+
+Terminal 1 : `npm run dev`
+
+Terminal 2 : `npm run cypress:open` (smoke d’abord) ou `npm run e2e`.
+
+**Critère de réussite**
+
+Le smoke passe. Une fois complétés et activés, les deux tests sont indépendants et vérifient la priorité dans la bonne carte puis la fermeture dans le détail.
+
+**Bonus (facultatif)**
+
+Recharge et persistance, recherche, titre vide ou tri; gardez chaque scénario autonome.

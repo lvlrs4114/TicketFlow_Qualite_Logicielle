@@ -1,17 +1,34 @@
-# TP4 — Le contrat que les unitaires n'ont pas vu (55 min)
+# TP4 — Suivre un ticket jusqu’au transport (45–50 min)
 
-**Incident.** La création apparaît localement, mais un backend qui exige `title` rejetterait le POST : le service envoie `name`. Ici le « transport » est une façade locale permissive. Le test doit vérifier ce que notre code lui transmet ; il ne prétend pas appeler un vrai serveur.
+**Contexte**
 
-## Mission essentielle — 25 min
+Le test unitaire ne vérifie pas encore le trajet complet de création. Le projet utilise un dépôt local et une façade qui imite un transport HTTP; aucun backend distant n’est appelé.
 
-Créer `tests/create-integration.test.js` dans l'environnement Jest `jsdom`. Nettoyer `localStorage` **avant chaque test** et restaurer les spies après chaque test. Utiliser le vrai `createTicket`, le vrai `ticketRepository` et la vraie `ticketApi`. Espionner uniquement `httpClient.post` pour vérifier l'appel `('/api/tickets', {title: 'Panne serveur', priority: 'HIGH'})`. Vérifier aussi qu'un ticket portant ce titre est conservé. Observer le rouge, puis corriger le mapping dans `src/ticket-service.js`.
+**Votre mission**
 
-## Investigation — 20 min
+1. Complétez et activez le test `test.skip` du starter. Il utilise le vrai `createTicket`, le dépôt et l’API; seul `httpClient.post` est espionné.
+2. Vérifiez l’appel au transport pour « Panne serveur » avec une sévérité de 8.
+3. Exécutez le test, observez le résultat et identifiez l’écart avec le contrat métier attendu.
+4. Corrigez le service, puis relancez les nouveaux et anciens tests ainsi que le build.
 
-Inspecter le modèle stocké : il ne doit pas contenir deux alias concurrents `title` et `name`. Ajouter un test de persistance, corriger la duplication. Discuter la séquence actuelle `save → post → notify` : en cas de POST rejeté, le ticket local demeure. Sans changer cette politique, rédiger un scénario de synchronisation possible et sa limite.
+**Fichiers utiles**
 
-## Défi — 10 min
+- `tests/create-integration.test.js`
+- `src/ticket-service.js`
+- Pour suivre le trajet : `src/ticket-repository.js`, `src/ticket-api.js`
 
-Écrire une preuve négative : un mock de `ticketApi.postTicket` qui accepte n'importe quoi ferait passer le test même si le payload est faux. Dessiner la frontière exacte des morceaux réellement testés. Quel contrôle supplémentaire serait nécessaire pour prouver qu'un vrai backend accepte le contrat ?
+**Commande**
 
-**Livrable :** test d'intégration rouge puis vert sur `title`, vérification du stockage canonique, explication d'une limite du transport local.
+```bash
+npm test -- --runInBand --runTestsByPath tests/create-integration.test.js
+npm test -- --runInBand
+npm run build
+```
+
+**Critère de réussite**
+
+Le test activé vérifie le contrat à la frontière transport avec les composants réels et passe après une correction ciblée. La suite existante et le build restent verts.
+
+**Bonus (facultatif)**
+
+Supprimez l’alias superflu du ticket stocké ou simulez un POST rejeté. Expliquez ce que l’espionnage du transport ne prouve pas.

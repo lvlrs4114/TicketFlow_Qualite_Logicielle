@@ -1,17 +1,33 @@
-# TP6 — Quatre tests qui inspirent peu confiance (50 min)
+# TP6 — Stabiliser deux tests Cypress (40–45 min)
 
-**Incident.** Un collègue a ajouté `cypress/e2e/06-flaky.starter.cy.js`. Ses quatre scénarios sont `skip` pour préserver le démarrage du cours. Activez-les **un à la fois** pour observer le problème, puis stabilisez-les.
+**Contexte**
 
-## Mission essentielle — 20 min
+Deux tests du starter illustrent une observation trop précoce et une dépendance entre scénarios. La fermeture depuis la liste a un délai aléatoire; ne modifiez pas l’application.
 
-Réparer le scénario « attente fixe » : remplacer `cy.wait(100)` par une assertion sur le statut attendu ; sélectionner la carte par son titre et `data-cy`, jamais par `nth-child`. Relancer plusieurs fois. Un test encore rouge parce que le comportement métier est faux doit rester rouge.
+**Votre mission**
 
-## Investigation — 20 min
+1. Activez le cas A (`describe.skip` → `describe`) et lancez-le; observez qu’il peut échouer ou passer selon le délai.
+2. Remplacez l’observation fragile par une vérification fiable de l’état fermé, sans délai fixe.
+3. Activez le cas B et vérifiez qu’il échoue lorsqu’il est lancé seul.
+4. Préparez les données nécessaires dans chaque test; relancez les tests séparément puis ensemble.
 
-Réparer les scénarios « ordre », « état partagé » et « sélecteur structurel » : préparer les tickets avec `cy.seedTickets` ou `cy.resetDb` dans chaque test ; utiliser un identifiant stable ; vérifier un effet visible. Exécuter toute la spec, puis inverser l'ordre des deux derniers tests : aucun ne doit dépendre du précédent. Expliquer la différence entre une panne du produit et une panne du test.
+**Fichiers utiles**
 
-## Défi — 10 min
+- `cypress/e2e/06-flaky.starter.cy.js`
+- `cypress/e2e/smoke.cy.js` pour la création
+- `cypress/support/e2e.js` pour les commandes de préparation
+- `src/app.js` pour observer le comportement (ne pas le modifier)
 
-Mesurer le temps perdu avec un `cy.wait(5000)` artificiel et le supprimer. Si le délai aléatoire de `src/app.js` nuit aussi à l'expérience utilisateur, le retirer et indiquer en quoi le test reste robuste lorsque l'opération est asynchrone pour de bonnes raisons.
+**Commande**
 
-**Livrable :** quatre scénarios autonomes, sans `.skip`, sans attente fixe, et un court diagnostic par source de fragilité.
+Terminal 1 : `npm run dev`
+
+Terminal 2 : `npm run e2e -- --spec cypress/e2e/06-flaky.starter.cy.js`
+
+**Critère de réussite**
+
+Le cas A attend l’état observable sans attente fixe. Le cas B passe seul et avec la spec complète, avec des données préparées par le test lui-même.
+
+**Bonus (facultatif)**
+
+Remplacez le sélecteur CSS profond du cas D par un sélecteur `data-cy` stable.

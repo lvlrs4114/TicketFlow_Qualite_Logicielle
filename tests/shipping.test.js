@@ -1,4 +1,4 @@
-import { shippingCost } from "../src/ticket-utils.js";
+import { shippingCost } from "../src/shipping.js";
 
 describe("shippingCost", () => {
   test.each([

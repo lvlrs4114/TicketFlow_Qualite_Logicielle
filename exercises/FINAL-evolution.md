@@ -1,17 +1,34 @@
-# Exercice final — Nouvelle exigence sous contrainte (30 min)
+# Exercice final — Compter les tickets en cours (20 min)
 
-**Changement annoncé :** un ticket de sévérité 8, 9 ou 10 doit être `HIGH` et déclencher **une** notification support. Le ticket doit rester sauvegardé si la notification échoue. La politique retenue pour cet exercice est de **propager l'erreur** tout en gardant le ticket local.
+**Contexte**
 
-## Mission essentielle — 20 min
+Une nouvelle règle métier demande de compter les tickets `IN_PROGRESS` parmi les tickets ouverts. La fonction concernée est pure : testez-la directement, sans mocks.
 
-Sans indication de niveau de test, choisir et écrire le minimum utile : seuil 7/8, notification unique à 8, absence de notification à 7, ticket persistant lorsque `notifySupport` rejette. Faire passer la suite. Noter quelles dépendances sont remplacées et pourquoi.
+**Votre mission**
 
-## Investigation — 5 min
+1. Activez et complétez le test ignoré dans `tests/FINAL-starter.test.js` pour les statuts `OPEN`, `IN_PROGRESS` et `CLOSED`.
+2. Lancez le test ciblé et observez le rouge avant de modifier le code.
+3. Adaptez `calculateStats()` dans `src/ticket-utils.js`.
+4. Relancez le test, la suite Jest et le build.
 
-Le service sauvegarde déjà avant la notification. Que se passe-t-il si `postTicket` échoue ? Quelle propriété votre test garantit-il vraiment ? Distinguer stockage local, réception serveur et livraison de notification.
+**Fichiers utiles**
 
-## Défi — 5 min
+- `tests/FINAL-starter.test.js`
+- `src/ticket-utils.js`
+- `tests/ticket-utils.test.js`
 
-Proposer un statut « notification à relancer » sans l'implémenter. Quel test d'intégration supplémentaire devient prioritaire ? Présenter en 60 secondes le choix des niveaux et les risques non couverts.
+**Commande**
 
-**Livrable :** tests justifiés, suite verte sur les règles demandées, et une explication de ce qu'elle ne prouve pas.
+```bash
+npm test -- --runInBand --runTestsByPath tests/FINAL-starter.test.js
+npm test -- --runInBand
+npm run build
+```
+
+**Critère de réussite**
+
+Le test sans mocks passe pour les trois statuts après la modification de `calculateStats()`. Les tests existants et le build restent verts.
+
+**Bonus (facultatif)**
+
+Discutez quels autres endroits, par exemple `getOpenTickets()` ou l’interface, pourraient évoluer avec cette règle.

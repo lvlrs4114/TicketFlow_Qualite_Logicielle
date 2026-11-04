@@ -1,21 +1,21 @@
 # Parcours étudiant — TicketFlow
 
-Ces fiches se suivent dans **le même projet**. Elles sont conçues pour deux journées de 7 h, dont environ 8 h de pratique. Les durées comprennent l'enquête, l'écriture des tests, la correction et la restitution ; elles ne sont pas des temps de frappe.
+Ces fiches se suivent dans **le même projet**.
 
-| Jour | Séquence | Durée de pratique | Livrable observable |
-|---|---|---:|---|
-| 1 | [TP0](TP0-exploration.md) | 30 min | Trois anomalies reproductibles et classées |
-| 1 | [TP1](TP1-unitaires.md) | 60 min | Tests qui font apparaître au moins deux défauts |
-| 1 | [TP2](TP2-couverture.md) | 60 min | Cas limites, mutation manuelle et conclusion sur la couverture |
-| 1 | [TP3](TP3-mocks.md) | 70 min | Service asynchrone testé avec succès, vide et erreur |
-| 2 | [TP4](TP4-integration.md) | 55 min | Contrat `title` vérifié à la frontière du transport |
-| 2 | [TP5](TP5-cypress.md) | 60 min | Parcours navigateur création → fermeture → retour |
-| 2 | [TP6](TP6-flaky.md) | 50 min | Scénarios isolés sans attente fixe ni sélecteur structurel |
-| 2 | [TP7](TP7-strategie.md) | 35 min | Budget de 15 tests justifié par les risques |
-| 2 | [TP8](TP8-ci.md) | 30 min | Diagnostic écrit de deux échecs et vérification de CI |
-| 2 | [Final](FINAL-evolution.md) | 30 min | Règle critique protégée aux niveaux choisis |
+| Jour | Séquence                    | Livrable observable                                            |
+| ---- | --------------------------- | -------------------------------------------------------------- |
+| 1    | [TP0](TP0-exploration.md)   | Trois anomalies reproductibles et classées                     |
+| 1    | [TP1](TP1-unitaires.md)     | Tests qui font apparaître au moins deux défauts                |
+| 1    | [TP2](TP2-couverture.md)    | Cas limites, mutation manuelle et conclusion sur la couverture |
+| 1    | [TP3](TP3-mocks.md)         | Service asynchrone testé avec succès, vide et erreur           |
+| 2    | [TP4](TP4-integration.md)   | Contrat `title` vérifié à la frontière du transport            |
+| 2    | [TP5](TP5-cypress.md)       | Parcours navigateur création → fermeture → retour              |
+| 2    | [TP6](TP6-flaky.md)         | Scénarios isolés sans attente fixe ni sélecteur structurel     |
+| 2    | [TP7](TP7-strategie.md)     | Budget de 8 tests pour six fonctionnalités                     |
+| 2    | [TP8](TP8-ci.md)            | Diagnostic CI et attente serveur                              |
+| 2    | [Final](FINAL-evolution.md) | `IN_PROGRESS` compté comme ouvert                              |
 
-**Total pratique : 480 min.** Les 6 h restantes sont consacrées aux explications, démonstrations et débriefs du support de cours. Les groupes rapides passent aux défis, les autres valident d'abord les critères essentiels.
+Les groupes rapides passent aux défis, les autres valident d'abord les critères essentiels.
 
 ## Avant de commencer
 

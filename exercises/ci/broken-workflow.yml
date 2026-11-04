@@ -10,4 +10,4 @@ jobs:
         with: { node-version: 22 }
       - run: npm ci
       - run: npm run dev &
-      - run: npm run e2e # Le serveur peut ne pas encore être prêt.
+      - run: npm run e2e

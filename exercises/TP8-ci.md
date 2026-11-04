@@ -1,15 +1,42 @@
-# TP8 — Diagnostiquer une CI, pas la faire taire (30 min)
+# TP8 — Diagnostiquer la CI (20–25 min)
 
-## Mission essentielle — 12 min
+**Contexte**
 
-Lire `exercises/ci/contract.log` et `exercises/ci/flaky.log` : pour chaque échec, relever job, scénario, assertion, hypothèse de cause, preuve à chercher et action **sans supprimer le test**. Le log « contrat » simule un backend strict absent de l'application locale ; ne pas prétendre le reproduire avec le serveur statique.
+Deux journaux décrivent des incidents différents. Comparez-les, puis examinez un workflow E2E qui peut démarrer Cypress avant que l’application soit prête. Le workflow actif sert de référence et ne doit pas être modifié.
 
-## Investigation — 12 min
+**Votre mission**
 
-Examiner `.github/workflows/tests.yml` et `exercises/ci/broken-workflow.yml`. Repérer l'absence d'attente du serveur dans l'exemple cassé, proposer l'ordre `npm ci → unitaires → build → serveur prêt → E2E`. Lancer localement `npm test -- --runInBand`, `npm run build` et `npm run e2e` avec le serveur actif. En cas d'échec, noter le navigateur et la cause observée.
+1. Lisez `contract.log` et `flaky.log`; remplissez pour chacun le diagnostic ci-dessous.
+2. Lisez `.github/workflows/tests.yml` et suivez l’ordre des étapes du job E2E.
+3. Comparez-le à `broken-workflow.yml` et complétez l’exemple incomplet.
+4. Vérifiez que l’exemple attend l’application avant de lancer Cypress; laissez le workflow actif intact.
 
-## Défi — 6 min
+| Incident | Attendu | Observé | Hypothèse et preuve | Correction proposée |
+|---|---|---|---|---|
+| `contract.log` | TODO | TODO | TODO | TODO |
+| `flaky.log` | TODO | TODO | TODO | TODO |
 
-Proposer une amélioration de diagnostic (capture Cypress ou séparation jobs) sans ralentir tous les commits. Expliquer pourquoi remplacer un timeout de 4 s par 30 s ne corrigerait pas un `400 title is required`.
+**Fichiers utiles**
 
-**Livrable :** deux fiches diagnostic et un patch argumenté du workflow d'exemple, hors `.github/workflows/`.
+- `exercises/ci/contract.log`, `exercises/ci/flaky.log`
+- `exercises/ci/broken-workflow.yml`
+- `.github/workflows/tests.yml`
+- `package.json`
+
+**Commande**
+
+```bash
+npm ci
+npm test -- --runInBand
+npm run build
+```
+
+Pour essayer Cypress : terminal 1 `npm run dev &`, puis terminal 2 `npm run e2e`.
+
+**Critère de réussite**
+
+Les journaux sont distingués dans le diagnostic; l’exemple cassé attend que l’application réponde avant Cypress, et le workflow actif n’a pas changé.
+
+**Bonus (facultatif)**
+
+Lancez toute la suite Cypress et proposez un artefact de diagnostic utile en cas d’échec.
