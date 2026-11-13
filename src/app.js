@@ -1,4 +1,9 @@
-import { createTicket, closeTicket, getTickets } from "./ticket-service.js";
+import {
+  createTicket,
+  closeTicket,
+  getTickets,
+  startTicket,
+} from "./ticket-service.js";
 import { ticketRepository } from "./ticket-repository.js";
 import { ticketApi } from "./ticket-api.js";
 import {
@@ -43,7 +48,7 @@ function renderList() {
     ? visible
         .map(
           (ticket) =>
-            `<article class="ticket" data-id="${ticket.id}" data-cy="ticket-card"><div><h3 data-cy="ticket-title-display">${displayTitle(ticket)}</h3><span class="badge" data-cy="priority-badge">${ticket.priority}</span> <span class="meta">Sévérité ${ticket.severity} · <span data-cy="ticket-status">${ticket.status}</span></span></div><div class="ticket-actions"><button class="open-btn secondary" data-id="${ticket.id}" data-cy="open-ticket">Détails</button>${ticket.status === "OPEN" ? `<button class="close-btn" data-id="${ticket.id}" data-cy="close-ticket">Clore</button>` : ""}</div></article>`,
+            `<article class="ticket" data-id="${ticket.id}" data-cy="ticket-card"><div><h3 data-cy="ticket-title-display">${displayTitle(ticket)}</h3><span class="badge" data-cy="priority-badge">${ticket.priority}</span> <span class="meta">Sévérité ${ticket.severity} · <span data-cy="ticket-status">${ticket.status}</span></span></div><div class="ticket-actions"><button class="open-btn secondary" data-id="${ticket.id}" data-cy="open-ticket">Détails</button>${ticket.status === "OPEN" ? `<button class="start-btn secondary" data-id="${ticket.id}" data-cy="start-ticket">Commencer</button>` : ""}${["OPEN", "IN_PROGRESS"].includes(ticket.status) ? `<button class="close-btn" data-id="${ticket.id}" data-cy="close-ticket">Clore</button>` : ""}</div></article>`,
         )
         .join("")
     : '<p class="empty">Aucun ticket.</p>';
@@ -63,6 +68,14 @@ function renderList() {
       await load();
     }),
   );
+  list.querySelectorAll(".start-btn").forEach((button) =>
+    button.addEventListener("click", async () => {
+      const ticket = tickets.find((item) => item.id === button.dataset.id);
+      if (!ticket) return;
+      await startTicket(ticket);
+      await load();
+    }),
+  );
 }
 
 function renderDetail() {
@@ -75,7 +88,7 @@ function renderDetail() {
   }
   detailPanel.hidden = false;
   board.hidden = true;
-  detail.innerHTML = `<p class="eyebrow">Fiche ticket</p><h2>${displayTitle(ticket)}</h2><p><span class="badge" data-cy="detail-priority">${ticket.priority}</span></p><dl class="ticket-details"><div><dt>Sévérité</dt><dd>${ticket.severity}</dd></div><div><dt>Statut</dt><dd data-cy="detail-status">${ticket.status}</dd></div><div><dt>Créé le</dt><dd>${new Date(ticket.createdAt).toLocaleString("fr-FR")}</dd></div></dl>${ticket.status === "OPEN" ? '<button id="detail-close-btn" data-cy="detail-close-ticket">Clore le ticket</button>' : '<p class="success">Ce ticket est fermé.</p>'}`;
+  detail.innerHTML = `<p class="eyebrow">Fiche ticket</p><h2>${displayTitle(ticket)}</h2><p><span class="badge" data-cy="detail-priority">${ticket.priority}</span></p><dl class="ticket-details"><div><dt>Sévérité</dt><dd>${ticket.severity}</dd></div><div><dt>Statut</dt><dd data-cy="detail-status">${ticket.status}</dd></div><div><dt>Créé le</dt><dd>${new Date(ticket.createdAt).toLocaleString("fr-FR")}</dd></div></dl>${["OPEN", "IN_PROGRESS"].includes(ticket.status) ? '<button id="detail-close-btn" data-cy="detail-close-ticket">Clore le ticket</button>' : '<p class="success">Ce ticket est fermé.</p>'}`;
   const closeButton = document.querySelector("#detail-close-btn");
   closeButton?.addEventListener("click", async () => {
     await closeTicket(ticket);

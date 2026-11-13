@@ -33,7 +33,7 @@ export function sortTicketsByTitle(tickets, mode = "creation") {
 
 export function calculateStats(tickets) {
   const safe = Array.isArray(tickets) ? tickets : [];
-  const open = safe.filter((t) => t.status === "OPEN").length;
+  const open = safe.filter((t) => ["OPEN", "IN_PROGRESS"].includes(t.status)).length;
   const closed = safe.filter((t) => t.status === "CLOSED").length;
   return { total: safe.length, open, closed };
 }

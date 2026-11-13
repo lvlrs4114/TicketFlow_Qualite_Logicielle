@@ -39,3 +39,15 @@ export async function closeTicket(
   await api.patchTicket(closed);
   return persisted;
 }
+
+export async function startTicket(
+  ticket,
+  repository = ticketRepository,
+  api = ticketApi,
+) {
+  if (ticket.status !== "OPEN") return ticket;
+  const inProgress = { ...ticket, status: "IN_PROGRESS" };
+  const persisted = await repository.replace(inProgress);
+  await api.patchTicket(inProgress);
+  return persisted;
+}

@@ -13,7 +13,7 @@ Ces fiches se suivent dans **le même projet**.
 | 2    | [TP6](TP6-flaky.md)         | Scénarios isolés sans attente fixe ni sélecteur structurel     |
 | 2    | [TP7](TP7-api.md)           | Même contrat API testé en Cypress et Jest                      |
 | 2    | [TP8](TP8-ci.md)            | Triage d’incidents CI à partir de journaux                    |
-| 2    | [Final](FINAL-evolution.md) | `IN_PROGRESS` compté comme ouvert                              |
+| 2    | [Final](FINAL-evolution.md) | Prise en charge vérifiée par Jest et Cypress                   |
 
 Les groupes rapides passent aux défis, les autres valident d'abord les critères essentiels.
 
