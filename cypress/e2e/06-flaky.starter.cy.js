@@ -1,5 +1,5 @@
 // TP6 : activer un cas à la fois en retirant son `.skip`.
-describe.skip("TP6 A — lecture ponctuelle après fermeture", () => {
+describe("TP6 A — lecture ponctuelle après fermeture", () => {
   it("peut lire CLOSED avant la fin de la fermeture", () => {
     cy.visit("/");
     cy.get('[data-cy="reset"]').click();
@@ -22,7 +22,7 @@ describe.skip("TP6 A — lecture ponctuelle après fermeture", () => {
   });
 });
 
-describe("TP6 B — dépendance entre tests", () => {
+describe.skip("TP6 B — dépendance entre tests", () => {
   it("prépare un ticket pour le test suivant", () => {
     cy.visit("/");
     cy.get('[data-cy="reset"]').click();

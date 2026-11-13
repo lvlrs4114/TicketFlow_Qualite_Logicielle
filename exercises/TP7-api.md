@@ -9,7 +9,7 @@ Le transport HTTP utilise `fetch`. Les scénarios Cypress interceptent les requ�
 ## Mission essentielle
 
 1. Dans `cypress/e2e/07-api.cy.js`, retirez `it.skip`, puis interceptez `GET /api/tickets` et répondez avec une liste vide.
-2. Intercepter `POST /api/tickets`, vérifier le corps envoyé (`name` et `priority`) et répondre avec un succès.
+2. Intercepter `POST /api/tickets`, vérifier le corps envoyé (`title` et `priority`) et répondre avec un succès.
 3. Créer un ticket depuis l’interface et vérifier le message de succès ainsi que les requêtes observées.
 4. Dans `tests/create-api.test.js`, retirez `test.skip`, puis testez `createTicket` avec une API Jest mockée. Vérifiez que `postTicket` reçoit le même contrat métier.
 

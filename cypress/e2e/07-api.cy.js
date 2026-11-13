@@ -1,14 +1,26 @@
 describe("TicketFlow — contrat API", () => {
-  it.skip("charge les tickets et transmet la création à l’API", () => {
-    // TODO 1 : intercepter GET /api/tickets et répondre avec une liste vide.
-    // TODO 2 : intercepter POST /api/tickets, vérifier son body et répondre 201.
+  it("charge les tickets et transmet la création à l’API", () => {
+    cy.intercept("GET", "/api/tickets", {
+      statusCode: 200,
+      body: { tickets: [] },
+    }).as("getTickets");
+    cy.intercept("POST", "/api/tickets", (request) => {
+      expect(request.body).to.deep.equal({
+        title: "VPN inaccessible",
+        priority: "LOW",
+      });
+      request.reply({
+        statusCode: 201,
+        body: { ticket: request.body },
+      });
+    }).as("createTicket");
 
     cy.visit("/");
-    // TODO 3 : attendre l’alias du GET.
+    cy.wait("@getTickets");
     cy.get('[data-cy="ticket-title"]').type("VPN inaccessible");
     cy.get('[data-cy="ticket-severity"]').select("3");
     cy.get('[data-cy="create-ticket"]').click();
-    // TODO 4 : attendre l’alias du POST.
+    // cy.wait("@createTicket");
     cy.contains("Ticket créé.").should("be.visible");
   });
 });
