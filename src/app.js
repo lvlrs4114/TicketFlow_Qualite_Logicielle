@@ -1,5 +1,6 @@
 import { createTicket, closeTicket, getTickets } from "./ticket-service.js";
 import { ticketRepository } from "./ticket-repository.js";
+import { ticketApi } from "./ticket-api.js";
 import {
   filterTickets,
   calculateStats,
@@ -120,6 +121,7 @@ search.addEventListener("input", render);
 sortMode.addEventListener("change", render);
 reset.addEventListener("click", async () => {
   ticketRepository.clear();
+  await ticketApi.clearTickets();
   selectedTicketId = null;
   await load();
 });

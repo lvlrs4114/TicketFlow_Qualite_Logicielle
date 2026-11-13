@@ -10,13 +10,20 @@ describe("createTicket — intégration locale", () => {
     jest.restoreAllMocks();
   });
 
-  test.skip("transmet le contrat attendu au transport local", async () => {
+  test("transmet le contrat attendu au transport local", async () => {
+
+    //arrange
     jest
       .spyOn(httpClient, "post")
       .mockResolvedValue({ status: 201, body: { ticket: {} } });
 
+    //act
     await createTicket({ title: "Panne serveur", severity: 8 });
 
-    // TODO étudiant : vérifier le chemin et le payload métier attendu.
+    //assert
+    expect(httpClient.post).toHaveBeenCalledWith("/api/tickets", {
+      title: "Panne serveur",
+      priority: "HIGH",
+    });
   });
 });

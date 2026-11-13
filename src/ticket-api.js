@@ -9,6 +9,16 @@ export const httpClient = {
       body: JSON.stringify(payload),
     }));
   },
+  async patch(path, payload) {
+    return toResponse(await fetch(path, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    }));
+  },
+  async delete(path) {
+    return toResponse(await fetch(path, { method: "DELETE" }));
+  },
 };
 
 async function toResponse(response) {
@@ -30,6 +40,12 @@ export const ticketApi = {
   },
   async postTicket(payload) {
     return assertOk(await httpClient.post("/api/tickets", payload));
+  },
+  async patchTicket(ticket) {
+    return assertOk(await httpClient.patch(`/api/tickets/${ticket.id}`, ticket));
+  },
+  async clearTickets() {
+    return assertOk(await httpClient.delete("/api/tickets"));
   },
   async notifySupport(ticket) {
     if (!ticket?.id) throw new Error("Ticket invalide");

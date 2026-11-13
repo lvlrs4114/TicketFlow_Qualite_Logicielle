@@ -4,7 +4,7 @@
   "private": true,
   "description": "Projet fil rouge - Qualite Logicielle & Testing Avance - Bachelor 3",
   "scripts": {
-    "dev": "http-server . -p 3000 -c-1",
+    "dev": "node scripts/dev-server.js",
     "test": "jest",
     "test:unit": "jest --runInBand",
     "test:watch": "jest --watch",

@@ -26,7 +26,7 @@ npm run dev
 npm test -- --runInBand
 ```
 
-Ouvrir `http://localhost:3000`. Pour Cypress : `npm run cypress:open` ; pour la CI locale : `npm run e2e` avec le serveur démarré. L’application envoie des requêtes HTTP avec `fetch`; Cypress les intercepte avec `cy.intercept`. Aucun backend n’est requis pour les scénarios interceptés.
+Ouvrir `http://localhost:3000`. `npm run dev` démarre l’application et son API locale (`/api/tickets`). Pour Cypress : `npm run cypress:open` ; pour la CI locale : `npm run e2e` avec le serveur démarré. Les scénarios Cypress peuvent intercepter les requêtes avec `cy.intercept`.
 
 Le dossier `enseignant/` contient la correction. Gardez-le fermé pendant les exercices. Chaque exercice précise les fichiers autorisés. Un test rouge attendu fait partie du travail : expliquez ce qu'il prouve avant de corriger le code.
 

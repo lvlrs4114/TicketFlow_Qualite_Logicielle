@@ -22,13 +22,20 @@ export async function createTicket(
     status: "OPEN",
     createdAt: new Date().toISOString(),
   };
-  const payload = { name: ticket.title, priority: ticket.priority };
-  const persisted = await repository.save({ ...ticket, name: ticket.title });
+  const payload = { title: ticket.title, priority: ticket.priority };
+  const persisted = await repository.save({ ...ticket, title: ticket.title });
   await api.postTicket(payload);
   if (ticket.priority === "HIGH") await api.notifySupport(ticket);
   return persisted;
 }
 
-export async function closeTicket(ticket, repository = ticketRepository) {
-  return repository.replace({ ...ticket, status: "CLOSED" });
+export async function closeTicket(
+  ticket,
+  repository = ticketRepository,
+  api = ticketApi,
+) {
+  const closed = { ...ticket, status: "CLOSED" };
+  const persisted = await repository.replace(closed);
+  await api.patchTicket(closed);
+  return persisted;
 }
